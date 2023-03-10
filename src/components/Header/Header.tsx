@@ -13,11 +13,14 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate } from "react-router-dom";
 
 const pages = ['Audiences', 'Campaigns', 'Affialates'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
+
 function Header() {
+    const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -34,6 +37,10 @@ function Header() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const onHeaderMenuClick = () => {
+        navigate('audiences');
     };
 
     return (
@@ -91,7 +98,9 @@ function Header() {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                    <Button onClick={onHeaderMenuClick}>
+                                        <Typography textAlign="center" >{page}</Typography>
+                                    </Button>
                                 </MenuItem>
                             ))}
                         </Menu>

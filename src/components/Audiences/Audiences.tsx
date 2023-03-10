@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Grid, Button, Card, CardContent, CardActions, Typography, Box, FormControl, InputLabel, Select, ToggleButtonGroup, ToggleButton, Divider, MenuItem, TextField, SelectChangeEvent } from '@mui/material';
 import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import './Audiences.css';
-import { AnyMxRecord } from "dns";
+import { useNavigate } from "react-router-dom";
 
 function Audiences() {
   const [audience, setAudience] = useState<any[]>([]);
   const [sortType, setSortType] = useState('');
   const [sortAsc, setSortAsc] = useState<boolean>(true);
   const [searchValue, setSearchValue] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchAudienceData();
@@ -82,8 +82,8 @@ function Audiences() {
   const searchedAudiences = searchValue ? filteredItems : audience;
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Audience Name', width: 320 },
+    { field: 'id', headerName: 'ID', width: 70, sortable: false },
+    { field: 'name', headerName: 'Audience Name', width: 320, sortable: false },
     {
       field: 'fullName',
       headerName: 'Demographic/Transaction',
@@ -93,7 +93,16 @@ function Audiences() {
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.dimensions[0].size || ''} / ${params.row.dimensions[1].size || ''}`,
     },
-    { field: 'totalSize', headerName: 'Audience size', width: 120 },
+    { field: 'totalSize', headerName: 'Audience size', width: 120, sortable: false },
+    {
+      field: 'more', headerName: '', width: 70, sortable: false,
+      renderCell: (params) => {
+        const handleClick = () => {
+          navigate(`audience/${params.id}`, { state: { row: params.row } });
+        }
+        return <Button onClick={handleClick}>View</Button>;
+      },
+    },
   ];
 
   const AudienceData = () => {
@@ -117,17 +126,14 @@ function Audiences() {
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={8} gap={2}>
+      <Grid item xs={9} gap={2}>
         <Card>
           <CardContent>
             <AudienceData />
           </CardContent>
-          <CardActions>
-            <Button size="small">See More</Button>
-          </CardActions>
         </Card>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={3}>
         <Card>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">

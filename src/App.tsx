@@ -1,25 +1,14 @@
 import './App.css';
-import { Container, Grid } from '@mui/material';
-import Audiences from './components/Audiences/Audiences';
-import Header from './components/Header/Header';
+import { Routes, Route } from "react-router-dom";
+import Home from './pages/Home';
+import AudienceDetails from './pages/AudienceDetails';
 
 function App() {
   return (
-    <div className="App">
-      <Container maxWidth={false} disableGutters={true}>
-        <Grid container>
-          <Grid item xs={12}>
-            <Header />
-            <br></br>
-          </Grid>
-          <Grid item xs={12}>
-            <Container maxWidth="lg">
-              <Audiences />
-            </Container>
-          </Grid>
-        </Grid>
-      </Container>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="audience/:id" element={<AudienceDetails />} />
+    </Routes>
   );
 }
 
