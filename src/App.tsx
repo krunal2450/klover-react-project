@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Container, Grid } from '@mui/material';
+import Audiences from './components/Audiences/Audiences';
+import Header from './components/Header/Header';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container maxWidth={false} disableGutters={true}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Header />
+            <br></br>
+          </Grid>
+          <Grid item xs={12}>
+            <Container maxWidth="lg">
+              <Audiences />
+            </Container>
+          </Grid>
+        </Grid>
+      </Container>
     </div>
   );
 }
